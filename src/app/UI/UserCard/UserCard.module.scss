@@ -1,0 +1,38 @@
+.userCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    flex-basis: calc((100% - 29px * 2 ) / 3);
+    background-color: var(--white);
+    p {
+        margin: 0;
+    }
+    img { 
+        border-radius: 50%;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        a {
+            position: relative;
+            span {
+                display: block;
+                visibility: hidden;
+                padding: 3px 18px;
+                background-color: var(--black);
+                position: absolute;
+                top: 47px;
+                left: 80px;
+                color: var(--white);
+                border-radius: 4px;
+            }
+            &:hover span {
+                visibility: visible;
+            }
+        }
+    }
+}
+   

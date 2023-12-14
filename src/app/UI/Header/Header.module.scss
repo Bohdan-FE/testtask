@@ -1,0 +1,21 @@
+
+.topHeader {
+background-color: var(--black);
+height: 60px;
+}
+
+.bottomHeader {
+background-color: #ffffff;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 0;
+}
+
+.nav {
+    display: flex;
+    gap: 10px;
+}

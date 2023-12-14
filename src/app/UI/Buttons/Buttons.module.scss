@@ -1,0 +1,15 @@
+.linkBtn {
+    min-width: 100px;
+    height: 34px;
+    background-color: var(--primary-color);
+    text-align: center;
+    border-radius: 80px;
+    text-decoration: none;
+    line-height: 34px;
+    color: var(--black);
+    display: inline-block;
+
+    &:hover {
+        background-color: var(--hover-color-btn);
+    }
+}
