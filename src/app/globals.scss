@@ -6,6 +6,9 @@
     --disabled-color-btn: #B4B4B4;
     --black: #161616;
     --white: #ffffff;
+    --border-color: #D0CFCF;
+    --error-color: #000000;
+    --label-color: #7E7E7E;
 }
 
 *,
@@ -32,11 +35,19 @@ li {
     list-style: none;
 }
 
+input{
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+}
+
 h1 {
     font-size: 40px;
     line-height: 40px;
     text-align: center;
     margin: 0;
+    font-weight: 400;
 }
 
 a {
@@ -50,6 +61,16 @@ p {
     margin: 0;
     font-size: 16px;
     line-height: 26px;
+    color: var(--black);
+}
+
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .wrapper {

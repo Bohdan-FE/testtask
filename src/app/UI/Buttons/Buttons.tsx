@@ -1,6 +1,4 @@
 'use client'
-
-import { getAllUsers } from '@/lib/getUsers';
 import style from './Buttons.module.scss'
 
 
@@ -14,10 +12,12 @@ export function LinkButton({ title, href }: {
     );
 }
 
-export function ShowMoreBtn({ handler }) {
+export function ShowMoreBtn({ showMoreHandler, disabled }: {
+    disabled: boolean, showMoreHandler: () => Promise<void>
+}) {
 
     return (
-        <button onClick={() => handler()}>Showe more</button>
+        <button className={style.btn} onClick={() => showMoreHandler()} disabled={disabled}>Show more</button>
     );
 }
 

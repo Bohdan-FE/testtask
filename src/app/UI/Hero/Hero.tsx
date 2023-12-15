@@ -1,3 +1,4 @@
+import { LinkButton } from '../Buttons/Buttons';
 import style from './Hero.module.scss'
 
 function Hero() {
@@ -11,7 +12,7 @@ function Hero() {
                     in mind. They should also be excited to learn, as the world of Front-End Development
                     keeps evolving.
                 </p>
-                <a href="" className='linkBtn'>Sign up</a>
+                <LinkButton href='' title='Sign up' />
             </div>
         </div>
     );

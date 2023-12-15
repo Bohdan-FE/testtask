@@ -8,3 +8,8 @@ export type User = {
     registration_timestamp: number,
     photo: string,
 }
+
+export type Position = {
+    id: number,
+    name: string,
+}
