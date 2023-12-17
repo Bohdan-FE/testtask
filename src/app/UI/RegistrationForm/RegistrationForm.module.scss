@@ -29,6 +29,7 @@
         border: 1px solid var(--border-color);
         padding-left: 16px;
         border-radius: 4px;
+
         &:focus~label,
         &:not(:placeholder-shown)~label {
             top: 0;
@@ -51,7 +52,8 @@
         display: flex;
         position: relative;
         height: 26px;
-        &:last-child{
+
+        &:last-child {
             margin-bottom: 0;
         }
 
@@ -106,6 +108,7 @@
     width: 100%;
     margin-top: 47px;
     margin-bottom: 50px;
+    position: relative;
 
     label {
         display: flex;
@@ -119,20 +122,24 @@
         justify-content: center;
         color: var(--black);
         cursor: pointer;
+
         &:active {
             transform: scale(0.9)
         }
     }
 
-    span {
+    p {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         border: 1px solid var(--border-color);
+        border-left: none;
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
         color: var(--label-color);
+       padding-left: 10px;
+       overflow: hidden;
     }
 
     input {
@@ -142,4 +149,13 @@
         height: 0.1px;
 
     }
+}
+
+.errorMessage {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 16px;
+    font-size: 12px;
+    line-height: 14px;
+    color: var(--error-color);
 }
