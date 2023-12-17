@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react"
 import style from './User.module.scss'
 import UserCard from "../UserCard/UserCard"
 import { ShowMoreBtn } from "../Buttons/Buttons"
+import { useLayoutEffect } from 'react';
 
-function UserList({ users, nextUrl }: { users: User[], nextUrl: string }) {
+function UserList({ users, nextUrl, total_pages }: { users: User[], nextUrl: string, total_pages: number }) {
     const [newUsers, setNewUsers] = useState<User[]>([])
-    const [url, setUrl] = useState<string | null>(nextUrl)
+    const [page, setPage] = useState<number>(1)
+    const [url, setUrl] = useState<string>(nextUrl)
     const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [maxLength, setMaxLength] = useState<number>(39)
     const ulRef = useRef<HTMLUListElement>(null)
@@ -35,20 +37,35 @@ function UserList({ users, nextUrl }: { users: User[], nextUrl: string }) {
 
     const showMoreHandler = async (): Promise<void> => {
         try {
-            if (!url) {
+            const response = await fetch(url)
+            const data = await response.json()
+            const { users, links: { next_url }, page } = data
+            setNewUsers(prev => [...prev, ...users])
+            setUrl(next_url)
+            setPage(page)
+            console.log(next_url)
+            if (total_pages === page) {
                 setIsDisabled(true)
                 return
             }
-            const response = await fetch(url)
-            const data = await response.json()
-            const { users, links: { next_url } } = data
-            setNewUsers(prev => [...prev, ...users])
-            setUrl(next_url)
         } catch (error) {
             console.log(error)
         }
     }
-    // if (ulRef.current) window.scrollTo(0, ulRef.current.offsetHeight * 2)
+
+    useLayoutEffect(() => {
+        if (newUsers.length !== 0 && ulRef?.current) {
+            const ulBottom = ulRef.current.offsetHeight + 200
+
+            window.scrollTo({
+                top: ulBottom,
+                behavior: 'smooth',
+            });
+        }
+    }, [newUsers, ulRef])
+
+
+    if (!newUsers || !users) return
     return (
         <>
             <ul ref={ulRef} className={style.userList}>

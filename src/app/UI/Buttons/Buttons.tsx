@@ -17,9 +17,15 @@ export function ShowMoreBtn({ showMoreHandler, disabled }: {
 }) {
 
     return (
-        <button className={style.btn} onClick={() => showMoreHandler()} disabled={disabled}>Show more</button>
+        <button className={style.showMore} onClick={() => showMoreHandler()} disabled={disabled}>Show more</button>
     );
 }
 
+export function SubmitBtn({ disabled }: { disabled: boolean }) {
+
+    return (
+        <button className={style.submit} type='submit' disabled={disabled} > Sign up</button >
+    )
+}
 
 

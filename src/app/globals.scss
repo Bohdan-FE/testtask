@@ -1,14 +1,14 @@
 :root {
-    --primary-color: #F4E041;
-    --secondary-color: #00BDD3;
-    --background-color: #F8F8F8;
-    --hover-color-btn: #FFE302;
-    --disabled-color-btn: #B4B4B4;
+    --primary-color: #f4e041;
+    --secondary-color: #00bdd3;
+    --background-color: #f8f8f8;
+    --hover-color-btn: #ffe302;
+    --disabled-color-btn: #b4b4b4;
     --black: #161616;
     --white: #ffffff;
-    --border-color: #D0CFCF;
+    --border-color: #d0cfcf;
     --error-color: #000000;
-    --label-color: #7E7E7E;
+    --label-color: #7e7e7e;
 }
 
 *,
@@ -35,7 +35,7 @@ li {
     list-style: none;
 }
 
-input{
+input {
     border: none;
     background: none;
     outline: none;
@@ -68,9 +68,24 @@ button {
     padding: 0;
     border: none;
     font: inherit;
-    color: inherit;
     background-color: transparent;
     cursor: pointer;
+    height: 34px;
+    background-color: var(--primary-color);
+    text-align: center;
+    border-radius: 80px;
+    color: var(--black);
+    display: inline-block;
+
+    &:hover {
+        background-color: var(--hover-color-btn);
+    }
+
+    &:disabled {
+        background-color: var(--disabled-color-btn);
+        color: rgba(255, 255, 255, 0.87);
+        cursor: not-allowed;
+    }
 }
 
 .wrapper {
@@ -79,4 +94,4 @@ button {
     margin: 0 auto;
 }
 
-@import 'normalize.css';
+@import "normalize.css";

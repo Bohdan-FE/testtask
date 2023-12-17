@@ -13,3 +13,11 @@ export type Position = {
     id: number,
     name: string,
 }
+
+export type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  position_id: number;
+  photo: FileList;
+};
