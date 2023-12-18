@@ -1,3 +1,5 @@
+import { PhotoDetails } from "./types";
+
 export const nameValidation = {
     required: 'Name required',
     minLength: {
@@ -33,56 +35,17 @@ export const positionValidation = {
 export const photoValidation = {
     required: 'Photo required',
     validate: {
-    error: async (fileList: FileList) => {
-      return new Promise((resolve) => {
-        if (fileList) {
-          const imageFile = fileList[0];
-          const reader = new FileReader();
-          const image = new Image();
-
-          reader.readAsDataURL(imageFile);
-          reader.onload = (event) => {
-            if (event.target && typeof event.target.result === 'string') {
-              image.src = event.target.result;
-            }
-          }
-
-          image.onload = () => {
-            if (image.width < 70 || image.height < 70) {
-              console.log(image.width, image.height);
-              resolve('The image should be larger than 70x70');
-            } else {
-              resolve(true);
-            }
-          };
-        } else {
-          resolve(true);
+      resolution: (photoDetails: PhotoDetails) => {
+        if (photoDetails.width < 70 && photoDetails.height < 70) {
+        return 'Photo must be at least 70x70'
         }
-      });
-    },
-  },
+        return true
+      },
+      size: (photoDetails: PhotoDetails) => {
+        if (photoDetails.size > (5 * 1024 * 1024)) {
+            return 'Photo must be less 5MB'
+        }
+        return true
+        }
+   },
 };
-
-
-
-// (fileList: FileList) => {
-//             if (fileList) {
-            
-//             const imageFile = fileList[0]
-//             const reader = new FileReader();
-//             const image = new Image()
-//             reader.readAsDataURL(imageFile);
-//             reader.onload = (event) => {
-//                 if (event.target && typeof event.target.result === 'string') {
-//                     image.src = event.target.result;
-//                     image.onload = () => {
-//                         if (image.width < 70 || image.height < 70) {  
-//                             return 'The image should be larger than 70x70'
-//                         }
-//                      }
-//                     }   
-//                 }
-            
-//         };
-//         return true
-//         }}

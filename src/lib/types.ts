@@ -19,5 +19,17 @@ export type FormData = {
   email: string;
   phone: string;
   position_id: number;
-  photo: FileList;
+  photo: {
+    name: string,
+    size: number,
+    width: number,
+    height: number
+  };
 };
+
+export type PhotoDetails = {  
+    name: string,
+    size: number,
+    width: number,
+    height: number
+}

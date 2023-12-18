@@ -1,19 +1,11 @@
 'use client'
-import { FormData, Position } from '@/lib/types'
+import { FormData, PhotoDetails, Position } from '@/lib/types'
 import style from './RegistrationForm.module.scss'
 import { useState } from 'react'
 import { SubmitBtn } from '../Buttons/Buttons'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { emailValidation, nameValidation, phoneValidation, photoValidation, positionValidation } from '@/lib/useFormValidation'
-
-
-
-const resolver = async (data: FormData) => {
-    return {
-        values: data,
-        errors: await validateAllFieldsAsync(data),
-    };
-};
+import { getPhotoWidthHeight } from '@/lib/getPhotoDetails'
 
 
 function RegistrationForm({ positions }: { positions: Position[] }) {
@@ -21,13 +13,20 @@ function RegistrationForm({ positions }: { positions: Position[] }) {
     const [values, setValues] = useState({ name: '', phone: '', email: '' })
     const { setValue, register, handleSubmit, formState: { errors, isValid } } = useForm<FormData>();
 
-    const inputFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFileName(e.target.files[0].name)
-            setValue('photo', e.target.files, { shouldValidate: true })
+            try {
+                const photoResolution = await getPhotoWidthHeight(e.target.files)
+                const photoDetails: PhotoDetails = { ...photoResolution, size: e.target.files[0].size, name: e.target.files[0].name }
+                console.log(photoDetails)
+                setValue('photo', photoDetails, { shouldValidate: true })
+            }
+            catch (error) {
+                throw new Error('Coudnt upload file')
+            }
         }
     }
-
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         console.log(data)
@@ -49,7 +48,7 @@ function RegistrationForm({ positions }: { positions: Position[] }) {
         }
         setValues(prev => ({ ...prev, [name]: newValue }))
     }
-    console.log(errors)
+
     return (
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
 
