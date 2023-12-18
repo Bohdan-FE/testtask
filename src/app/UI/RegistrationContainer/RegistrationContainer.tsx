@@ -1,14 +1,22 @@
-import { getPositions } from "@/lib/getPositions";
+'use client'
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import { Position } from "@/lib/types";
+import { useState } from "react";
+import SuccessRegistration from "../SuccessRegistration/SuccessRegistration";
 
 
-async function RegistrationContainer() {
-    const { positions } = await getPositions()
+function RegistrationContainer({ positions }: {
+    positions: Position[]
+}) {
+    const [isRegistered, setIsRegistered] = useState(false)
+
+    const changeRegistrationState = (): void => {
+        setIsRegistered(true)
+    }
 
     return (
         <div className="wrapper">
-            <h1>Working with POST request</h1>
-            <RegistrationForm positions={positions} />
+            {isRegistered ? <SuccessRegistration /> : <RegistrationForm positions={positions} changeRegistrationState={changeRegistrationState} />}
         </div>
     );
 }

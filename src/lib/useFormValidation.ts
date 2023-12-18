@@ -15,7 +15,7 @@ export const nameValidation = {
 export const emailValidation = {
     required: 'Email required',
     pattern: {
-        value: /^(("[\w\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w\s]+")([\w-]+(?:\.[\w-]+)*))@((([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([\w-]+\.)+[\w]{2,})))$/,
+        value: /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
         message: 'Email incorrect'
     } 
 }
@@ -23,8 +23,8 @@ export const emailValidation = {
 export const phoneValidation = {
     required: 'Phone required',
     pattern: {
-        value: /^\+380\d{9}$/,
-        message: 'Phone must start with +380 and be 13 characters long '
+        value: /^[\+]{0,1}380([0-9]{9})$/,
+        message: 'Phone must start with +380 '
     }
 }
 
@@ -37,15 +37,22 @@ export const photoValidation = {
     validate: {
       resolution: (photoDetails: PhotoDetails) => {
         if (photoDetails.width < 70 && photoDetails.height < 70) {
-        return 'Photo must be at least 70x70'
+        return 'Photo resolution must be at least 70x70'
         }
         return true
       },
       size: (photoDetails: PhotoDetails) => {
-        if (photoDetails.size > (5 * 1024 * 1024)) {
-            return 'Photo must be less 5MB'
+        if (photoDetails.file.size > (5 * 1024 * 1024)) {
+            return 'Photo size must not exceed 5MB'
         }
         return true
+        },
+        extension: (photoDetails: PhotoDetails) => {
+          const validTypes = ['image/jpeg', 'image/jpg']
+        if (!validTypes.includes(photoDetails.file.type)) {
+            return 'Photo extension must be jpeg/jpg'
         }
+        return true
+        },
    },
 };

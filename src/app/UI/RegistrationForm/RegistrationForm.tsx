@@ -1,25 +1,26 @@
 'use client'
-import { FormData, PhotoDetails, Position } from '@/lib/types'
-import style from './RegistrationForm.module.scss'
+import { Form, PhotoDetails, Position } from '@/lib/types'
 import { useState } from 'react'
 import { SubmitBtn } from '../Buttons/Buttons'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { emailValidation, nameValidation, phoneValidation, photoValidation, positionValidation } from '@/lib/useFormValidation'
 import { getPhotoWidthHeight } from '@/lib/getPhotoDetails'
+import { signUp } from '@/lib/registration'
+import style from './RegistrationForm.module.scss'
 
-
-function RegistrationForm({ positions }: { positions: Position[] }) {
+function RegistrationForm({ positions, changeRegistrationState }: { positions: Position[], changeRegistrationState: () => void }) {
     const [fileName, setFileName] = useState<String>('Upload your photo')
     const [values, setValues] = useState({ name: '', phone: '', email: '' })
-    const { setValue, register, handleSubmit, formState: { errors, isValid } } = useForm<FormData>();
+    const { setValue, register, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
+        mode: 'onBlur'
+    });
 
     const inputFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFileName(e.target.files[0].name)
             try {
                 const photoResolution = await getPhotoWidthHeight(e.target.files)
-                const photoDetails: PhotoDetails = { ...photoResolution, size: e.target.files[0].size, name: e.target.files[0].name }
-                console.log(photoDetails)
+                const photoDetails: PhotoDetails = { ...photoResolution, file: e.target.files[0] }
                 setValue('photo', photoDetails, { shouldValidate: true })
             }
             catch (error) {
@@ -28,8 +29,9 @@ function RegistrationForm({ positions }: { positions: Position[] }) {
         }
     }
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Form> = async (data) => {
+        const registration = await signUp(data)
+        if (registration.success) changeRegistrationState()
     }
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +51,10 @@ function RegistrationForm({ positions }: { positions: Position[] }) {
         setValues(prev => ({ ...prev, [name]: newValue }))
     }
 
-    return (
-        <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+    return (<>
+        <h1>Working with POST request</h1>
+
+        <form className={style.form} onSubmit={handleSubmit(onSubmit)} >
 
             <div className={style.inputContainer} >
                 <input type="text" id="name" placeholder=''
@@ -88,14 +92,16 @@ function RegistrationForm({ positions }: { positions: Position[] }) {
 
             <div className={style.file}>
                 <label htmlFor="file" style={errors?.photo?.message ? { border: '2px solid var(--error-color)' } : {}}>Upload</label>
-                <p style={errors?.photo?.message ? { borderColor: 'var(--error-color)' } : {}}>{fileName}</p>
+                <p style={errors?.photo?.message ? { border: '2px solid var(--error-color)', borderLeft: 'none' } : {}}>{fileName}</p>
                 <input type="file" id='file' accept='.jpg, .jpeg' onChange={inputFileHandler} />
                 {errors?.photo?.message && <span className={style.errorMessage}>{errors?.photo?.message}</span>}
             </div>
-            <input type="text" {...register("photo", photoValidation)} />
-            <SubmitBtn disabled={false} />
+            <input type="text" hidden {...register("photo", photoValidation)} />
+
+            <SubmitBtn disabled={!isValid} />
         </form>
-    );
+    </>
+    )
 }
 
 export default RegistrationForm;

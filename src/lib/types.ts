@@ -14,22 +14,20 @@ export type Position = {
     name: string,
 }
 
-export type FormData = {
+export type Form = {
   name: string;
   email: string;
   phone: string;
   position_id: number;
   photo: {
-    name: string,
-    size: number,
+   file: File,
     width: number,
     height: number
   };
 };
 
 export type PhotoDetails = {  
-    name: string,
-    size: number,
+    file: File,
     width: number,
     height: number
 }

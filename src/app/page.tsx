@@ -1,23 +1,22 @@
-
-import styles from './page.module.css'
+import { useState } from 'react'
 import Header from './UI/Header/Header'
-import Hero from './UI/Hero/Hero'
-import RegistrationContainer from './UI/RegistrationContainer/RegistrationContainer'
-import Users from './UI/Users/Users'
+import HeroSection from './UI/Sections/HeroSection'
+import RegistrationSection from './UI/Sections/RegistrationSection'
+import UsersSection from './UI/Sections/UsersSection'
+import { usersContext } from './context'
+
 
 export default function Home() {
+  const [users, setUsers] = useState([])
+
   return (<>
     <Header></Header>
     <main>
-      <section>
-        <Hero />
-      </section>
-      <section id='users-section'>
-        <Users />
-      </section>
-      <section>
-        <RegistrationContainer />
-      </section>
+      <HeroSection />
+      <usersContext.Provider value={{ users, setUsers }}>
+        <UsersSection />
+        <RegistrationSection />
+      </usersContext.Provider>
     </main>
   </>
   )
