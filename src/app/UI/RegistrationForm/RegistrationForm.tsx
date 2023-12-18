@@ -1,19 +1,36 @@
 'use client'
 import { Form, PhotoDetails, Position } from '@/lib/types'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SubmitBtn } from '../Buttons/Buttons'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { emailValidation, nameValidation, phoneValidation, photoValidation, positionValidation } from '@/lib/useFormValidation'
 import { getPhotoWidthHeight } from '@/lib/getPhotoDetails'
 import { signUp } from '@/lib/registration'
 import style from './RegistrationForm.module.scss'
+import { getPositions } from '@/lib/getPositions'
+import { getUsers } from '@/lib/getUsers'
+import { usersContext } from '@/app/context'
 
-function RegistrationForm({ positions, changeRegistrationState }: { positions: Position[], changeRegistrationState: () => void }) {
+function RegistrationForm({ changeRegistrationState }: { changeRegistrationState: () => void }) {
     const [fileName, setFileName] = useState<String>('Upload your photo')
     const [values, setValues] = useState({ name: '', phone: '', email: '' })
     const { setValue, register, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
         mode: 'onBlur'
     });
+    const [positions, setPositions] = useState<Position[] | []>([])
+    const { setUsersData } = useContext(usersContext)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getPositions()
+                if (data) setPositions(data.positions)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [])
 
     const inputFileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -30,8 +47,14 @@ function RegistrationForm({ positions, changeRegistrationState }: { positions: P
     }
 
     const onSubmit: SubmitHandler<Form> = async (data) => {
-        const registration = await signUp(data)
-        if (registration.success) changeRegistrationState()
+        try {
+            const registration = await signUp(data)
+            if (registration.success) changeRegistrationState()
+            const newUsers = await getUsers(1, 6)
+            setUsersData(newUsers)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +73,7 @@ function RegistrationForm({ positions, changeRegistrationState }: { positions: P
         }
         setValues(prev => ({ ...prev, [name]: newValue }))
     }
-
+    if (!positions) return
     return (<>
         <h1>Working with POST request</h1>
 

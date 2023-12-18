@@ -1,4 +1,3 @@
-
 export const getPhotoWidthHeight = async (fileList: FileList):Promise<{width: number, height: number}> => {
 return new Promise((resolve) => {
           const imageFile = fileList[0];

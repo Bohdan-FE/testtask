@@ -1,25 +1,35 @@
 'use client'
 import { User } from "@/lib/types"
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import style from './UserList.module.scss'
 import UserCard from "../UserCard/UserCard"
 import { ShowMoreBtn } from "../Buttons/Buttons"
 import { useLayoutEffect } from 'react';
+import { usersContext } from "@/app/context"
+import Spinner from "../Spinner/Spinner"
 
-function UserList({ users, nextUrl, total_pages, page }: { users: User[], nextUrl: string, total_pages: number, page: number }) {
-    const [newUsers, setNewUsers] = useState<User[]>([...users])
-    const [url, setUrl] = useState<string>(nextUrl)
-    const [isDisabled, setIsDisabled] = useState<boolean>(total_pages === page)
+function UserList() {
+    const { usersData, setUsersData } = useContext(usersContext)
+    const [newUsers, setNewUsers] = useState<User[]>([])
+    const [url, setUrl] = useState<string>('')
+    const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [maxLength, setMaxLength] = useState<number>(39)
+    const [isLoading, setIsLoading] = useState(false)
     const ulRef = useRef<HTMLUListElement>(null)
 
-
+    useEffect(() => {
+        if (!usersData) return
+        setNewUsers(usersData.users)
+        setUrl(usersData.links.next_url)
+        setIsDisabled(usersData.page === usersData.total_pages)
+    }, [usersData])
 
     const showMoreHandler = async (): Promise<void> => {
         try {
+            setIsLoading(true)
             const response = await fetch(url)
             const data = await response.json()
-            const { users, links: { next_url }, page } = data
+            const { users, links: { next_url }, page, total_pages } = data
             setNewUsers(prev => [...prev, ...users])
             setUrl(next_url)
             console.log(next_url)
@@ -29,6 +39,8 @@ function UserList({ users, nextUrl, total_pages, page }: { users: User[], nextUr
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -53,13 +65,16 @@ function UserList({ users, nextUrl, total_pages, page }: { users: User[], nextUr
         };
     }, []);
 
+    if (!usersData) {
+        return <Spinner />
+    }
 
-    if (!newUsers || !users) return
     return (
         <>
             <ul ref={ulRef} className={style.userList}>
                 {newUsers.map(user => <UserCard key={user.id} user={user} maxLength={maxLength} />)}
             </ul>
+            {isLoading && <Spinner />}
             <ShowMoreBtn showMoreHandler={showMoreHandler} disabled={isDisabled} />
         </>
     );
