@@ -9,7 +9,7 @@
     color: var(--black);
     display: inline-block;
 
-    &:hover {
+    &:hover, &:focus {
         background-color: var(--hover-color-btn);
     }
 }
