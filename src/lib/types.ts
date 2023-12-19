@@ -45,3 +45,9 @@ export type PhotoDetails = {
     width: number,
     height: number
 }
+
+export type Register = {
+  success : boolean,
+  user_id : number,
+  message : string,
+}

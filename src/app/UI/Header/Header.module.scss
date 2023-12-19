@@ -22,7 +22,11 @@ height: 60px;
         }
     @media screen and (min-width: 1170px) {
         padding: 17px 0px;
-        }                             
+        }   
+        p {
+            margin-left: auto;
+            font-weight: 700;
+        }                          
 }
 
 .nav {
@@ -30,3 +34,4 @@ height: 60px;
     gap: 10px;
     margin-left: auto;
 }
+

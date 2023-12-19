@@ -3,7 +3,6 @@ import { getRegistrationToken } from "./getRegistrationToken";
 import { Form } from "./types";
 
 export const signUp = async (data: Form) => {
-  try {
     const token = await getRegistrationToken();
     const formData = new FormData();
     formData.append("position_id", data.position_id + "");
@@ -17,7 +16,4 @@ export const signUp = async (data: Form) => {
       headers: { Token: token.token },
     });
     return response.json();
-  } catch (error) {
-    return error;
-  }
 };

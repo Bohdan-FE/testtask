@@ -46,7 +46,7 @@ function UserList() {
             setIsLoading(false)
         }
     }
-    console.log(maxLength)
+
     useLayoutEffect(() => {
         const handleResize = () => {
             setUlWidth(ulRef.current?.offsetWidth)

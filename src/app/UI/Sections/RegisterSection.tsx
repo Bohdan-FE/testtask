@@ -3,20 +3,17 @@
 import SuccessRegistration from "../SuccessRegistration/SuccessRegistration";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import style from './Seciton.module.scss'
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { usersContext } from "@/app/context";
 
 
 function RegistrationSection() {
-    const [isRegistered, setIsRegistered] = useState(false)
-
-    const changeRegistrationState = (): void => {
-        setIsRegistered(!isRegistered)
-    }
+    const { registerData } = useContext(usersContext)
 
     return (
         <section className={style.registerSection} id='register-section'>
             <div className="wrapper">
-                {isRegistered ? <SuccessRegistration /> : <RegistrationForm changeRegistrationState={changeRegistrationState} />}
+                {registerData?.success ? <SuccessRegistration /> : <RegistrationForm />}
             </div>
         </section>
     );

@@ -4,23 +4,28 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    flex: 0 0 calc((100% - 29px * 2 ) / 3);
+    flex: 0 0 calc((100% - 29px * 2) / 3);
     background-color: var(--white);
+
     p {
         margin: 0;
         text-align: center;
         white-space: nowrap;
         max-width: 100%;
     }
-    img { 
+
+    img {
         border-radius: 50%;
     }
+
     div {
         display: flex;
         flex-direction: column;
         align-items: center;
+
         a {
             position: relative;
+
             span {
                 display: block;
                 visibility: hidden;
@@ -33,10 +38,10 @@
                 border-radius: 4px;
                 z-index: 1;
             }
+
             &:hover span {
                 visibility: visible;
             }
         }
     }
 }
-   

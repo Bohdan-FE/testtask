@@ -11,14 +11,14 @@ import { getUsers } from '@/lib/getUsers'
 import { usersContext } from '@/app/context'
 import style from './RegistrationForm.module.scss'
 
-function RegistrationForm({ changeRegistrationState }: { changeRegistrationState: () => void }) {
+function RegistrationForm() {
     const [fileName, setFileName] = useState<String>('Upload your photo')
     const [values, setValues] = useState({ name: '', phone: '', email: '' })
     const { setValue, register, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
         mode: 'onBlur'
     });
     const [positions, setPositions] = useState<Position[] | []>([])
-    const { setUsersData } = useContext(usersContext)
+    const { setUsersData, setRegister } = useContext(usersContext)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,7 +49,7 @@ function RegistrationForm({ changeRegistrationState }: { changeRegistrationState
     const onSubmit: SubmitHandler<Form> = async (data) => {
         try {
             const registration = await signUp(data)
-            if (registration.success) changeRegistrationState()
+            if (registration.success) setRegister(registration)
             const newUsers = await getUsers(1, 6)
             setUsersData(newUsers)
         } catch (error) {
