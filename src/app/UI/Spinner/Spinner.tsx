@@ -1,6 +1,6 @@
 import Image from "next/image";
 import img from '../../../../public/spinner.svg'
-import style from './spinner.module.scss'
+import style from './Spinner.module.scss'
 
 function Spinner() {
     return (
