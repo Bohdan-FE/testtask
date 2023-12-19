@@ -1,8 +1,18 @@
 .userList {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 29px;
     grid-auto-flow: row;
     margin-bottom: 50px;
-    align-self: normal;
+    max-width: 1170px;
+    width: 100%;
+
+    @media screen and (min-width: 704px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 904px) {
+        grid-template-columns: repeat(3, 1fr);   
+    }
+
 }
+

@@ -1,3 +1,4 @@
+// css змінні
 :root {
     --primary-color: #f4e041;
     --secondary-color: #00bdd3;
@@ -7,11 +8,12 @@
     --black: #161616;
     --white: #ffffff;
     --border-color: #d0cfcf;
-    --error-color: #000000;
     --label-color: #7e7e7e;
     --error-color: #CB3D40;
 }
 
+
+// кастомна нормалізація стилів
 *,
 *::before,
 *::after {
@@ -20,11 +22,14 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
     background-color: var(--background-color);
     transition: background-color cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 ul {
@@ -48,6 +53,7 @@ h1 {
     line-height: 40px;
     text-align: center;
     margin: 0;
+    margin-bottom: 21px;
     font-weight: 400;
 }
 
@@ -68,7 +74,6 @@ p {
 button {
     padding: 0;
     border: none;
-    font: inherit;
     background-color: transparent;
     cursor: pointer;
     height: 34px;
@@ -91,9 +96,30 @@ button {
 
 .wrapper {
     max-width: 1180px;
-    padding: 0 5px;
+    padding: 0 16px;
     margin: 0 auto;
+
+    @media screen and (min-width: 768px) {
+        padding: 0 32px;
+    }
+
+    @media screen and (min-width: 1024px) {
+        padding: 0 60px;
+    }
+
+    @media screen and (min-width: 1170px) {
+        padding: 0;
+    }
+
 }
 
+.title {
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 50px;
+    font-weight: 400;
+}
 
 @import "normalize.css";

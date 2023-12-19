@@ -3,19 +3,30 @@
 background-color: var(--black);
 height: 60px;
 }
-
 .bottomHeader {
-background-color: #ffffff;
+    background-color: var(--white);
 }
 
 .menu {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 17px 0;
+    padding: 17px 16px;
+    max-width: 1170px;
+    margin: 0 auto;
+  
+    @media screen and (min-width: 768px) {
+        padding: 17px 32px;
+        }    
+    @media screen and (min-width: 1024px) {
+        padding: 17px 60px;
+        }
+    @media screen and (min-width: 1170px) {
+        padding: 17px 0px;
+        }                             
 }
 
 .nav {
     display: flex;
     gap: 10px;
+    margin-left: auto;
 }

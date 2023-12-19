@@ -6,10 +6,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { emailValidation, nameValidation, phoneValidation, photoValidation, positionValidation } from '@/lib/useFormValidation'
 import { getPhotoWidthHeight } from '@/lib/getPhotoDetails'
 import { signUp } from '@/lib/registration'
-import style from './RegistrationForm.module.scss'
 import { getPositions } from '@/lib/getPositions'
 import { getUsers } from '@/lib/getUsers'
 import { usersContext } from '@/app/context'
+import style from './RegistrationForm.module.scss'
 
 function RegistrationForm({ changeRegistrationState }: { changeRegistrationState: () => void }) {
     const [fileName, setFileName] = useState<String>('Upload your photo')
@@ -73,9 +73,11 @@ function RegistrationForm({ changeRegistrationState }: { changeRegistrationState
         }
         setValues(prev => ({ ...prev, [name]: newValue }))
     }
+
     if (!positions) return
+
     return (<>
-        <h1>Working with POST request</h1>
+        <h2 className='title'>Working with POST request</h2>
 
         <form className={style.form} onSubmit={handleSubmit(onSubmit)} >
 
@@ -105,15 +107,16 @@ function RegistrationForm({ changeRegistrationState }: { changeRegistrationState
 
             <div className={style.radio}>
                 <legend>Select your position</legend>
-                {positions.map(position =>
+                {positions.map((position, index) =>
                     <div key={position.id}>
                         <input type="radio" id={position.name} value={position.id}
-                            {...register("position_id", positionValidation)} />
+                            {...register("position_id", positionValidation)}
+                            defaultChecked={index === 0} />
                         <label htmlFor={position.name}>{position.name}</label>
                     </div>)}
             </div>
 
-            <div className={style.file}>
+            <div className={style.fileInput}>
                 <label htmlFor="file" style={errors?.photo?.message ? { border: '2px solid var(--error-color)' } : {}}>Upload</label>
                 <p style={errors?.photo?.message ? { border: '2px solid var(--error-color)', borderLeft: 'none' } : {}}>{fileName}</p>
                 <input type="file" id='file' accept='.jpg, .jpeg' onChange={inputFileHandler} />

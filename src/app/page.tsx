@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Header from './UI/Header/Header'
 import HeroSection from './UI/Sections/HeroSection'
-import RegistrationSection from './UI/Sections/RegistrationSection'
+import RegistrationSection from './UI/Sections/RegisterSection'
 import UsersSection from './UI/Sections/UsersSection'
 import { usersContext } from './context'
 import { getUsers } from '@/lib/getUsers'

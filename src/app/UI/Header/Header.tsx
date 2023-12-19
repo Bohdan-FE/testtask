@@ -6,12 +6,13 @@ function Header() {
     return (
         <header className={style.header}>
             <div className={style.topHeader}></div>
+
             <div className={style.bottomHeader}>
-                <div className={style.menu + ' wrapper'}>
+                <div className={style.menu}>
                     <Logo />
                     <nav className={style.nav}>
                         <LinkButton href='#users-section' title='Users' />
-                        <LinkButton href='' title='Sign up' />
+                        <LinkButton href='#register-section' title='Sign up' />
                     </nav>
                 </div>
             </div>

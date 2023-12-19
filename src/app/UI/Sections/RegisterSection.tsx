@@ -1,17 +1,20 @@
 'use client'
-import { useState } from "react";
+
 import SuccessRegistration from "../SuccessRegistration/SuccessRegistration";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import style from './Seciton.module.scss'
+import { useState } from "react";
+
 
 function RegistrationSection() {
     const [isRegistered, setIsRegistered] = useState(false)
 
     const changeRegistrationState = (): void => {
-        setIsRegistered(true)
+        setIsRegistered(!isRegistered)
     }
 
     return (
-        <section>
+        <section className={style.registerSection} id='register-section'>
             <div className="wrapper">
                 {isRegistered ? <SuccessRegistration /> : <RegistrationForm changeRegistrationState={changeRegistrationState} />}
             </div>

@@ -24,7 +24,7 @@ export const phoneValidation = {
     required: 'Phone required',
     pattern: {
         value: /^[\+]{0,1}380([0-9]{9})$/,
-        message: 'Phone must start with +380 '
+        message: 'Phone must start with +380 and be 13 characters long'
     }
 }
 

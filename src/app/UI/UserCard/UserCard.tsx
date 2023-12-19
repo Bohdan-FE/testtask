@@ -1,9 +1,11 @@
 'use client'
-import { User } from '@/lib/types';
+
 import Image from 'next/image'
 import style from './UserCard.module.scss'
 import defaultPhoto from '../../../../public/photo-cover.svg'
+import { motion } from "framer-motion"
 import { useState } from 'react';
+import { User } from '@/lib/types';
 
 
 
@@ -19,7 +21,7 @@ function UserCard({ user, maxLength }: { user: User, maxLength: number }) {
     }
 
     return (
-        <li className={style.userCard}>
+        <motion.li className={style.userCard} initial={{ opacity: 0.6, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}>
             <Image width={70} height={70} src={src} alt={name} onError={e => setSrc(defaultPhoto)} />
             <p>{truncateText(name, maxLength)}</p>
             <div>
@@ -31,7 +33,7 @@ function UserCard({ user, maxLength }: { user: User, maxLength: number }) {
                     <span>{phone}</span>
                 </a>
             </div>
-        </li>);
+        </motion.li>);
 }
 
 export default UserCard;
